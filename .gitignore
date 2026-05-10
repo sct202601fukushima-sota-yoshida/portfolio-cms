@@ -40,5 +40,8 @@ uploads/*
 .DS_Store
 
 ### Lighthouse generated reports (regenerated on demand) ###
+# 拡張子つきとつかない両方を除外（lighthouse --output-path の挙動差異対応）
 docs/lighthouse/*.html
 docs/lighthouse/*.json
+docs/lighthouse/mobile
+docs/lighthouse/desktop
