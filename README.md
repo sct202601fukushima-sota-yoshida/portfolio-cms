@@ -1,5 +1,12 @@
 # Portfolio CMS
 
+[![CI](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/actions/workflows/ci.yml/badge.svg)](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/demo-online-success)](https://portfolio-cms-cjr4.onrender.com)
+![Java](https://img.shields.io/badge/Java-17-007396?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F?logo=springboot&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?logo=postgresql&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-28%20passing-success)
+
 自作CMSを搭載した、自己紹介プレゼンテーションLP。
 スライド形式のトップページに掲載するコンテンツ（テキスト・画像・カテゴリ）を、
 認証付きの管理画面から CRUD 操作で更新できる、Spring Boot 製のフルスタックアプリ。
@@ -7,7 +14,6 @@
 就職活動用ポートフォリオとして、**設計・実装・運用の3点を1人で通す**ことを目標に製作。
 
 🚀 **ライブ公開中:** [https://portfolio-cms-cjr4.onrender.com](https://portfolio-cms-cjr4.onrender.com)
-*Render 無料枠のため、初回アクセスは起動に約 10 秒かかります*
 
 ---
 

@@ -1,0 +1,35 @@
+# =============================================================
+# Keep Render free-tier service warm
+#
+# Render の無料 Web Service は 15 分アクセスが無いとスリープする。
+# 採用担当が初めて URL を開いた際の 10 秒待ち（コールドスタート）を回避するため、
+# GitHub Actions の cron で 14 分毎に / を ping して常時起動状態を維持する。
+#
+# - GitHub の cron は分単位の精度が保証されない（数分遅れる場合あり）ので
+#   余裕を持って 14 分間隔とし、Render の 15 分スリープより速い
+# - 公開リポジトリの Actions は無料、月の制限内で十分間に合う
+# - 60 日間 push が無いと GitHub がスケジュール無効化する点だけ注意
+# =============================================================
+name: Keep warm
+
+on:
+  schedule:
+    # 14 分毎（UTC）。Render の 15 分スリープより 1 分速いマージン
+    - cron: "*/14 * * * *"
+  workflow_dispatch:    # 手動でも実行できる
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Ping live site
+        run: |
+          set -e
+          URL="https://portfolio-cms-cjr4.onrender.com/"
+          echo "Pinging $URL"
+          # -L: redirects, --max-time 30: cold-start も許容
+          status=$(curl -s -o /dev/null -L --max-time 30 -w "%{http_code}" "$URL")
+          echo "HTTP $status"
+          # 200 か 301/302 のみ成功扱い
+          [[ "$status" =~ ^(200|301|302)$ ]]
