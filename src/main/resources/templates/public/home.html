@@ -5,6 +5,22 @@
 
 <header th:replace="~{layout/fragments :: header}"></header>
 
+<!-- 目次サイドバー: デスクトップ幅 (≥1100px) でのみ表示。
+     IntersectionObserver で現在見ているカテゴリをハイライト。 -->
+<nav class="toc" aria-label="目次">
+    <ol class="toc__list">
+        <li th:each="cat : ${categories}" class="toc__item">
+            <a class="toc__link"
+               th:href="${'#category-' + cat.sortOrder}"
+               th:data-target="${'category-' + cat.sortOrder}">
+                <span class="toc__num"
+                      th:text="${#numbers.formatInteger(cat.sortOrder + 1, 2)}">01</span>
+                <span class="toc__name" th:text="${cat.name}">カテゴリ</span>
+            </a>
+        </li>
+    </ol>
+</nav>
+
 <main class="site-main">
     <section class="hero">
         <div class="container">
@@ -62,7 +78,8 @@
 
         <th:block th:each="slide, slideStat : ${slides}">
             <header class="category-divider"
-                    th:if="${slideStat.first or slides[slideStat.index - 1].category.id != slide.category.id}">
+                    th:if="${slideStat.first or slides[slideStat.index - 1].category.id != slide.category.id}"
+                    th:id="${'category-' + slide.category.sortOrder}">
                 <span class="category-divider__index"
                       th:text="${#numbers.formatInteger(slide.category.sortOrder + 1, 2)}">01</span>
                 <span class="category-divider__name" th:text="${slide.category.name}">カテゴリ</span>
@@ -93,6 +110,40 @@
 </main>
 
 <footer th:replace="~{layout/fragments :: footer}"></footer>
+
+<script>
+    // 目次のアクティブ状態を、スクロール位置にあわせて更新する。
+    // 画面上部 25% 付近に入ったカテゴリを「現在地」とみなす設計。
+    (function () {
+        const links = document.querySelectorAll('.toc__link');
+        if (!links.length) return;
+        const map = new Map();
+        links.forEach((a) => {
+            const t = a.dataset.target;
+            if (t) map.set(t, a);
+        });
+        const setActive = (el) => {
+            const link = map.get(el.id);
+            if (!link) return;
+            links.forEach((l) => l.classList.remove('is-active'));
+            link.classList.add('is-active');
+        };
+        const observer = new IntersectionObserver((entries) => {
+            // viewport 上部に最も近いものをアクティブ化
+            const visible = entries
+                .filter((e) => e.isIntersecting)
+                .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+            if (visible[0]) setActive(visible[0].target);
+        }, {
+            // 画面上部 25% を「現在地」判定ライン
+            rootMargin: '-25% 0px -70% 0px',
+            threshold: 0,
+        });
+        document
+            .querySelectorAll('[id^="category-"]')
+            .forEach((el) => observer.observe(el));
+    })();
+</script>
 
 </body>
 </html>
