@@ -249,6 +249,20 @@ portfolio-cms/
 
 ---
 
+## アーキテクチャ判断の記録 (ADR)
+
+主要な設計判断は `docs/adr/` に Architecture Decision Records として残している。「いつ・なぜ・何を選んだか」がコードの履歴とは別に追える。
+
+| # | タイトル |
+|:---:|:---|
+| [0001](docs/adr/0001-css-cascade-layers.md) | CSS Cascade Layers でスタイルアーキテクチャを構築 |
+| [0002](docs/adr/0002-markdown-ssr-with-cjk-fix.md) | Markdown を SSR でレンダリングし、CJK 句読点問題は後処理で解決 |
+| [0003](docs/adr/0003-render-supabase-deploy.md) | Render 無料枠 + Supabase Session Pooler でデプロイ |
+| [0004](docs/adr/0004-noindex-for-job-hunting.md) | 求職活動用に検索エンジンインデックスを拒否 |
+| [0005](docs/adr/0005-no-opacity-in-entrance-animations.md) | 入場アニメから opacity 遷移を排除し a11y を優先 |
+
+---
+
 ## 工夫した点
 
 - **Lighthouse 高スコア（Mobile + Desktop）：** Performance 97-100 / Accessibility 100 / Best Practices 100。WebP 配信 + `<picture>` フォールバック、lazy loading + `fetchpriority`、WCAG AA 4.5:1 を満たす色コントラスト調整まで詰めた結果。SEO は求職用に意図的に noindex / nofollow を設定（is-crawlable 失点の 1 項目のみ）。詳細: [docs/lighthouse/SUMMARY.md](docs/lighthouse/SUMMARY.md)
