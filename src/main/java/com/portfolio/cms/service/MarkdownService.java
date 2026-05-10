@@ -30,6 +30,18 @@ public class MarkdownService {
     }
 
     /**
+     * 「**bold**」が CommonMark の flanking rule で太字認識されなかった残留パターンを
+     * 後処理で {@code <strong>} へ昇格させる。CommonMark の flanking rule は
+     * 英文向けに作られており、`**` の直前直後が CJK の括弧（「」『』 等）の場合に
+     * 太字として認識されないことがある（既知の英文中心の制約）。
+     *
+     * <p>例: {@code **「監督する」**} は CommonMark では太字にならない（`**` の直後が `「`、
+     * 直前が `」` で、いずれも CommonMark 上は punctuation 扱いとなり flanking 規則を満たさない）。
+     */
+    private static final java.util.regex.Pattern RESIDUAL_BOLD =
+            java.util.regex.Pattern.compile("\\*\\*([^*\\n]{1,200}?)\\*\\*");
+
+    /**
      * Markdown 文字列を HTML へ変換する。
      *
      * @param markdown 変換元の Markdown。{@code null} または空白のみの場合は空文字を返す。
@@ -39,6 +51,7 @@ public class MarkdownService {
         if (markdown == null || markdown.isBlank()) {
             return "";
         }
-        return renderer.render(parser.parse(markdown));
+        String html = renderer.render(parser.parse(markdown));
+        return RESIDUAL_BOLD.matcher(html).replaceAll("<strong>$1</strong>");
     }
 }

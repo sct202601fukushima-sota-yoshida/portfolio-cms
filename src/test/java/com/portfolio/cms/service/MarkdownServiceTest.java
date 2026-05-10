@@ -28,6 +28,16 @@ class MarkdownServiceTest {
     }
 
     @Test
+    @DisplayName("太字: CJK 句読点に隣接した **「text」** も <strong> 化される（flanking rule の補正）")
+    void bold_adjacentToJapaneseQuotes_isAlsoRendered() {
+        String html = markdown.toHtml("コードを「書かせる」のではなく**「監督する」**習慣");
+
+        assertThat(html)
+                .contains("<strong>「監督する」</strong>")
+                .doesNotContain("**「監督する」**");
+    }
+
+    @Test
     @DisplayName("斜体: *text* → <em>text</em>")
     void italic_isRenderedAsEmTag() {
         String html = markdown.toHtml("*強調*");
