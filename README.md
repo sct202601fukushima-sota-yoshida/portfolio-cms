@@ -6,6 +6,9 @@
 
 就職活動用ポートフォリオとして、**設計・実装・運用の3点を1人で通す**ことを目標に製作。
 
+🚀 **ライブ公開中:** [https://portfolio-cms-cjr4.onrender.com](https://portfolio-cms-cjr4.onrender.com)
+*Render 無料枠のため、初回アクセスは起動に約 10 秒かかります*
+
 ---
 
 ## なぜ作ったか
