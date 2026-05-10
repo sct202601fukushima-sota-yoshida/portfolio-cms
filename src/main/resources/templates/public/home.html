@@ -3,6 +3,9 @@
 <head th:replace="~{layout/fragments :: head('Portfolio')}"></head>
 <body>
 
+<!-- 読了進捗バー: scroll() タイムラインで pure CSS 実装 -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
 <header th:replace="~{layout/fragments :: header}"></header>
 
 <!-- 目次サイドバー: デスクトップ幅 (≥1100px) でのみ表示。
@@ -109,6 +112,9 @@
     </div>
 </main>
 
+<!-- 戻るトップボタン: 一定スクロール後に scroll() タイムラインで自動フェードイン -->
+<button class="back-to-top" type="button" aria-label="トップへ戻る">↑</button>
+
 <!-- Lightbox: スライド画像クリックで拡大表示。
      ネイティブ <dialog> によりフォーカストラップ・ESC 閉じる・::backdrop が自動。 -->
 <dialog class="lightbox" id="lightbox" aria-label="画像拡大表示">
@@ -173,6 +179,11 @@
             if (e.target === dlg) dlg.close();
         });
     })();
+
+    // 戻るトップボタン: クリックで滑らかにスクロール
+    document.querySelector('.back-to-top')?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 </script>
 
 </body>
