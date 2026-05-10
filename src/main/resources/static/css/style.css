@@ -301,13 +301,12 @@ h1, h2, h3, h4 {
     animation: hero-fade-up 0.7s var(--ease) 0.6s backwards;
 }
 
-/* ヒーロー要素の段差フェードアップ用 keyframes
-   各要素の animation-delay でタイトルロール風の連鎖を実現する */
+/* ヒーロー要素の段差スライドアップ用 keyframes
+   各要素の animation-delay でタイトルロール風の連鎖を実現する。
+   opacity の段階遷移は意図的に避け、translateY のみで「現れる」感覚を作る
+   （Lighthouse color-contrast audit のアニメ中サンプリングを回避するため） */
 @keyframes hero-fade-up {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
+    from { transform: translateY(12px); }
 }
 
 /* ---- Category divider ---- */
@@ -360,9 +359,13 @@ h1, h2, h3, h4 {
                 box-shadow 0.2s var(--ease);
 }
 
-/* スクロール連動でカードがフェード＋スライドイン
+/* スクロール連動でカードがスライドイン
    animation-timeline: view() を使用（モダン CSS、IntersectionObserver 不要）
-   非対応ブラウザでは @supports によりアニメーションをスキップし、通常表示にフォールバック */
+   非対応ブラウザでは @supports によりアニメーションをスキップし、通常表示にフォールバック
+
+   note: opacity の段階遷移は意図的に避けている。Lighthouse の color-contrast
+   audit が「アニメ途中の半透明合成色」をサンプリングして失点判定にしてしまうため、
+   位置だけを動かし可読性は常に確保する設計。 */
 @supports (animation-timeline: view()) {
     .slide-card {
         animation: card-reveal linear both;
@@ -370,14 +373,8 @@ h1, h2, h3, h4 {
         animation-range: entry 0% entry 40%;
     }
     @keyframes card-reveal {
-        from {
-            opacity: 0;
-            transform: translateY(24px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { transform: translateY(24px); }
+        to   { transform: translateY(0); }
     }
 }
 .slide-card:hover {
