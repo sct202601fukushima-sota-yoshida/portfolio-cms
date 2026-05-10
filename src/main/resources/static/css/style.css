@@ -658,3 +658,163 @@ h1, h2, h3, h4 {
     /* 小型モバイル: 黄金矩形を非表示（フッタの φ サイン等は残す） */
     .hero::before, .hero::after { display: none; }
 }
+
+/* =============================================================
+   Dark mode (prefers-color-scheme: dark)
+   CSS 変数のみを差し替えて反転を実現。ヒーローは両モードで暗色だが、
+   ダーク時は body の方をさらに暗くすることで「持ち上げ」の階層感を作る。
+   ============================================================= */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* テキスト・背景の反転 */
+        --color-ink:           #fbfaf6;   /* 主要テキスト（旧: 紙色） */
+        --color-text:          #c9cfd6;   /* 本文 */
+        --color-muted:         #8d949e;
+        --color-paper:         #0e1117;   /* body 背景: ヒーローより暗くしてヒーローを浮かせる */
+        --color-surface:       #1f242c;   /* カード背景 */
+        --color-border:        #2a3038;
+        --color-rule:          #3a4148;
+        --color-muted-bg:      #232931;
+
+        /* 紺はダーク背景に映えるよう少し明るく */
+        --color-accent:        #7d9bbf;
+        --color-accent-hover:  #9bb4d0;
+
+        /* ゴールドはダーク背景上で十分なコントラストを得るため明るめへ */
+        --color-gold:          #d4b883;
+        --color-gold-hover:    #e8d2a8;
+        --color-gold-text:     #d4b883;   /* 紙色背景用の暗いゴールドではなく、ダーク背景用の明るいゴールド */
+
+        --color-danger:        #d57968;
+        --color-success-bg:    #1f3a1c;
+        --color-success-fg:    #b8e0b0;
+        --color-error-bg:      #3a1f1c;
+        --color-error-fg:      #e0b8b0;
+        --color-info-bg:       #1c2a3a;
+        --color-info-fg:       #b8c8e0;
+    }
+
+    /* グレインノイズはダーク背景上では読みづらくなるので無効化 */
+    html, body { background-image: none; }
+
+    /* ヒーロー: 浮き上がった「持ち上げ」感のため、body より少し明るい暗色に */
+    .hero { background: #1a1f2c; }
+
+    /* ヒーロー内テキストは反転後の --color-ink (#fbfaf6) を期待しないので明示 */
+    .hero h1, .slide-card h2 { color: var(--color-ink); }
+
+    /* sticky ヘッダのフロスト効果をダーク用に調整 */
+    .site-header {
+        background: rgba(14, 17, 23, 0.78);
+    }
+
+    /* カテゴリ区切りのフロストガラスをダーク用に */
+    .category-divider {
+        background: linear-gradient(180deg,
+                    rgba(35, 41, 49, 0.7),
+                    rgba(35, 41, 49, 0.3));
+        border-color: rgba(58, 65, 72, 0.6);
+    }
+
+    /* マークダウン本文の <strong> はダーク背景でさらに目立たせる */
+    .slide-description strong { color: #fbfaf6; }
+
+    /* フォーム入力欄をダーク用に */
+    .form-group input[type="text"],
+    .form-group input[type="password"],
+    .form-group input[type="number"],
+    .form-group input[type="file"],
+    .form-group textarea,
+    .form-group select {
+        background: var(--color-surface);
+        color: var(--color-ink);
+    }
+}
+
+/* =============================================================
+   Print stylesheet
+   採用担当が PDF 化して社内共有するケースを想定し、A4 1 枚 1 スライド
+   を目安に、トナー消費を抑えつつ可読性を最大化する。
+   ============================================================= */
+@media print {
+    /* ベース: 白地 + 黒寄り、グレイン除去 */
+    html, body {
+        background: white !important;
+        background-image: none !important;
+        color: #1a1f2c !important;
+        font-size: 10.5pt;
+    }
+
+    /* インタラクティブ UI / 装飾は非表示 */
+    .site-header,
+    .site-footer__contact,
+    .hero-blueprint {
+        display: none !important;
+    }
+
+    /* ヒーローは反転して紙ベースに、最初のページに収める */
+    .hero {
+        background: white !important;
+        color: #1a1f2c !important;
+        padding: 0.5cm 0 0.3cm !important;
+        margin-bottom: 0.5cm !important;
+        border-bottom: 1px solid #d8d2c4;
+        page-break-after: avoid;
+    }
+    .hero h1,
+    .hero h1 .accent { color: #1a1f2c !important; }
+    .hero .lead     { color: #2d3340 !important; font-weight: 400 !important; }
+    .hero__meta     { color: #826a3a !important; }
+
+    /* スライドカード: 影・装飾を排除し、分割を防ぐ */
+    .slide-card {
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #d8d2c4 !important;
+        background: white !important;
+        padding: 0.5cm !important;
+        margin-bottom: 0.4cm !important;
+    }
+    .slide-card:hover { transform: none !important; }
+    .slide-card h2 { color: #1a1f2c !important; }
+
+    /* カテゴリ区切り: 紙的な実線に */
+    .category-divider {
+        background: white !important;
+        backdrop-filter: none !important;
+        border: none !important;
+        border-top: 1px solid #d8d2c4 !important;
+        padding: 0.2cm 0 !important;
+        margin: 0.4cm 0 0.2cm !important;
+        page-break-after: avoid;
+    }
+    .category-divider__rule { display: none; }
+
+    /* 画像: 高さを抑えてページ収まりを優先 */
+    .slide-images img {
+        max-height: 7cm !important;
+        page-break-inside: avoid;
+        border: 1px solid #d8d2c4 !important;
+    }
+
+    /* 本文中のリンクは URL を併記（紙では href が見えないため） */
+    .slide-description a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.85em;
+        color: #6b7280;
+        word-break: break-all;
+    }
+
+    /* フッタは φ シグネチャだけ残す */
+    .site-footer {
+        background: white !important;
+        border-top: 1px solid #d8d2c4;
+        color: #6b7280;
+        padding: 0.3cm 0;
+    }
+
+    /* 印刷時のページ余白 */
+    @page {
+        margin: 1.2cm 1.5cm;
+    }
+}
