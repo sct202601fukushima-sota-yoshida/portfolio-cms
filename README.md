@@ -8,11 +8,10 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?logo=postgresql&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-28%20passing-success)
 
-自作CMSを搭載した、自己紹介プレゼンテーションLP。
-スライド形式のトップページに掲載するコンテンツ（テキスト・画像・カテゴリ）を、
-認証付きの管理画面から CRUD 操作で更新できる、Spring Boot 製のフルスタックアプリ。
+**「全体の企画・計画」を得意とし、AI 時代の開発との相性の良さを軸にした**「複合的な技術者」志望の自己紹介ポートフォリオ。
 
-就職活動用ポートフォリオとして、**設計・実装・運用の3点を1人で通す**ことを目標に製作。
+Claude Code（AI コーディングエージェント）と協働して、**動くものを先に作り、必要な知識を逆算で学ぶ** —
+その実例として、自己紹介サイト自体を Spring Boot 製のフルスタック CMS として一人で構築・運用しています。
 
 🚀 **ライブ公開中:** [https://portfolio-cms-cjr4.onrender.com](https://portfolio-cms-cjr4.onrender.com)
 
@@ -20,14 +19,21 @@
 
 ## なぜ作ったか
 
-「動くだけのCRUDアプリ」ではなく、**実務で求められる以下の技術要素を網羅したアプリ**を1人で完成させ、未経験からのエンジニア転職でも「明日から手を動かせる」ことを示す目的で製作した。
+私が最終的に目指している姿は **デザイン制作 → フロントエンド → バックエンドまで総合的に対応できる「複合的な技術者」** です。
+
+得意としているのは個別の作業ではなく **「全体の企画・計画」** で、これは **コードを書くタスクが AI 側に多く移っていく時代の開発スタイルと極めて相性が良い** と考えています。Claude Code との協働では、私が **「何を、なぜ、どの順で作るか」**、AI が **「どう書くか」** を担う役割分担が自然に成立します。
+
+加えて、家電量販店等での通算 6 年ほどの営業経験から、**契約獲得数・KPI 進捗・競合関係下での交渉**といった「数字で示せるコミュニケーション」と進捗管理の素養があります。これらを総合し、本サイトを以下の構成で完成させました:
 
 1. **設計：** 4テーブル構成（User / Category / Slide / SlideImage）による1対多リレーションと正規化
 2. **認証：** Spring Security + BCrypt + CSRF 対策
-3. **マイグレーション：** Flyway でスキーマ + シード（7カテゴリ・19スライド）をコード管理
-4. **テスト：** JUnit 5 + Mockito + MockMvc でService/Controller層をカバー（28テスト）
-5. **CI：** GitHub Actions で push 時に自動テスト＋ビルド
-6. **UI：** テンプレ感のない独自CSS（デザイン科卒 + DTP職業訓練の経験を反映）
+3. **マイグレーション：** Flyway でスキーマ + シード（7カテゴリ・21スライド）をコード管理
+4. **テスト：** JUnit 5 + Mockito + MockMvc で Service / Controller 層をカバー（28テスト）
+5. **CI/CD：** GitHub Actions で push 毎テスト + Render auto-deploy
+6. **UI：** 黄金比ベースの独自CSS デザインシステム + 2026 年デザイントレンド反映（Lighthouse 100/100/100/100 達成）
+7. **コンテンツ：** Markdown 対応 + commonmark-java で SSR レンダリング
+
+ソースコードと実装の意図は、本サイトの「ポートフォリオ」「学習・スキル」セクションでも詳述しています。
 
 ---
 
@@ -279,13 +285,15 @@ portfolio-cms/
 - [x] SEO / OGP / Favicon
 - [x] README へスクリーンショット追加
 - [x] `application-prod.yml` プロファイル + 環境変数による設定外出し
-- [ ] 本番デプロイ（OCI Always Free ARM → 保険で Render 無料枠）
-- [ ] 画像ストレージを OCI Object Storage に移行（現在はローカル保存）
-- [ ] Python (FastAPI) 版の移植 — Python 特化軸の補強として
+- [x] 本番デプロイ完了（Render Web Service + Supabase PostgreSQL）
+- [x] Lighthouse 100 / 100 / 100 / 100 達成（Mobile + Desktop）
+- [ ] 画像ストレージを永続的な外部サービスへ移行（現在は Docker イメージ同梱）
+- [ ] 管理画面の Markdown リアルタイムプレビュー（任意）
 
 ---
 
 ## 作者
 
 **吉田 颯汰**
-デザイン科卒 / 通信販売7年 → Java・Python 職業訓練中（2026年）
+デザイン科卒 → 家電量販店での営業職（約6年） → Java・Python 職業訓練中（2026年）
+複合的な技術者を目指してバイブコーディングで自走中
