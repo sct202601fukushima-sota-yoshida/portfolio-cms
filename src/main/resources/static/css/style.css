@@ -489,6 +489,59 @@ h1, h2, h3, h4 {
     background: transparent;
 }
 .slide-images img:hover { transform: scale(1.01); }
+.slide-images img.is-zoomable { cursor: zoom-in; }
+
+/* ---- Lightbox (image zoom dialog) ---- */
+.lightbox {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 100vw;
+    max-height: 100vh;
+    /* dialog はデフォルト中央配置。明示しておく */
+    margin: auto;
+    overflow: visible;
+}
+.lightbox::backdrop {
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.lightbox__img {
+    display: block;
+    max-width: 92vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: var(--radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    /* ロード時に少し拡大して馴染む演出 */
+    animation: lightbox-zoom-in 0.18s var(--ease);
+}
+.lightbox__close {
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    color: var(--color-paper);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s var(--ease);
+}
+.lightbox__close:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+.lightbox__close:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+}
+@keyframes lightbox-zoom-in {
+    from { transform: scale(0.96); }
+}
 
 /* Slide description — Markdown でレンダリングされる HTML 要素を装飾 */
 .slide-description {
