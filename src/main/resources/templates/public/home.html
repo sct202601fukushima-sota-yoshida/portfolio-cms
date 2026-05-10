@@ -71,9 +71,17 @@
             <section class="slide-card">
                 <h2 th:text="${slide.title}">タイトル</h2>
                 <div class="slide-images" th:if="${not #lists.isEmpty(slide.images)}">
-                    <img th:each="img : ${slide.images}"
-                         th:src="@{'/uploads/' + ${img.fileName}}"
-                         th:alt="${slide.title}">
+                    <picture th:each="img, imgStat : ${slide.images}">
+                        <!-- WebP は seed 済みの .jpg ファイルにのみ用意 -->
+                        <source th:if="${#strings.endsWith(img.fileName, '.jpg')}"
+                                th:srcset="@{'/uploads/' + ${#strings.replace(img.fileName, '.jpg', '.webp')}}"
+                                type="image/webp">
+                        <img th:src="@{'/uploads/' + ${img.fileName}}"
+                             th:alt="${slide.title}"
+                             th:attr="loading=${slideStat.first and imgStat.first} ? 'eager' : 'lazy',
+                                      decoding='async',
+                                      fetchpriority=${slideStat.first and imgStat.first} ? 'high' : 'auto'">
+                    </picture>
                 </div>
                 <div class="slide-description"
                      th:if="${slide.description}"
