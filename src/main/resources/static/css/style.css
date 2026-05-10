@@ -240,10 +240,17 @@ h1, h2, h3, h4 {
 .hero-blueprint .bp-spiral {
     fill: none;
     stroke: currentColor;
-    stroke-width: 0.6;
-    stroke-opacity: 0.55;
-    stroke-dasharray: 1.5 1.5;
+    stroke-width: 0.7;
+    stroke-opacity: 0.65;
+    /* 螺旋を「描画中」アニメーションで見せるため、長い dasharray を使う。
+       dashoffset を 0 へ遷移させることで線が左から右へ引かれて見える。 */
+    stroke-dasharray: 1000;
     vector-effect: non-scaling-stroke;
+    animation: bp-spiral-draw 2.4s var(--ease) 0.3s backwards;
+}
+@keyframes bp-spiral-draw {
+    from { stroke-dashoffset: 1000; }
+    to   { stroke-dashoffset: 0; }
 }
 .hero-blueprint .bp-dims line {
     stroke: currentColor;
@@ -268,6 +275,7 @@ h1, h2, h3, h4 {
     margin-bottom: var(--s-4);
     font-weight: 700;
     letter-spacing: -0.02em;
+    animation: hero-fade-up 0.7s var(--ease) 0.1s backwards;
 }
 .hero h1 .accent {
     color: var(--color-gold);
@@ -281,6 +289,7 @@ h1, h2, h3, h4 {
     letter-spacing: 0.03em;
     max-width: var(--container-narrow);
     line-height: var(--lh-base);
+    animation: hero-fade-up 0.7s var(--ease) 0.35s backwards;
 }
 .hero__meta {
     margin-top: var(--s-5);
@@ -289,6 +298,16 @@ h1, h2, h3, h4 {
     color: var(--color-gold);
     letter-spacing: 0.12em;
     opacity: 0.85;
+    animation: hero-fade-up 0.7s var(--ease) 0.6s backwards;
+}
+
+/* ヒーロー要素の段差フェードアップ用 keyframes
+   各要素の animation-delay でタイトルロール風の連鎖を実現する */
+@keyframes hero-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
 }
 
 /* ---- Category divider ---- */
@@ -337,13 +356,35 @@ h1, h2, h3, h4 {
     padding: var(--s-5);
     margin-bottom: var(--s-4);
     transition: border-color 0.2s var(--ease),
-                transform 0.2s var(--ease),
+                translate 0.2s var(--ease),
                 box-shadow 0.2s var(--ease);
+}
+
+/* スクロール連動でカードがフェード＋スライドイン
+   animation-timeline: view() を使用（モダン CSS、IntersectionObserver 不要）
+   非対応ブラウザでは @supports によりアニメーションをスキップし、通常表示にフォールバック */
+@supports (animation-timeline: view()) {
+    .slide-card {
+        animation: card-reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 40%;
+    }
+    @keyframes card-reveal {
+        from {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }
 .slide-card:hover {
     border-color: var(--color-gold);
     box-shadow: var(--shadow);
-    transform: translateY(-2px);
+    /* transform はスクロール連動アニメーションが制御するため、hover では translate のみ操作 */
+    translate: 0 -2px;
 }
 .slide-card h2 {
     font-size: var(--fs-lg);
@@ -700,6 +741,21 @@ h1, h2, h3, h4 {
 @media (max-width: 480px) {
     /* 小型モバイル: 黄金矩形を非表示（フッタの φ サイン等は残す） */
     .hero::before, .hero::after { display: none; }
+}
+
+/* =============================================================
+   Reduced motion preference
+   prefers-reduced-motion: reduce を選んでいる利用者には、
+   一切の入場アニメーションを無効化する（アクセシビリティ対応）。
+   ============================================================= */
+@media (prefers-reduced-motion: reduce) {
+    .hero h1,
+    .hero .lead,
+    .hero__meta,
+    .hero-blueprint .bp-spiral,
+    .slide-card {
+        animation: none !important;
+    }
 }
 
 /* =============================================================
