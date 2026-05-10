@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/actions/workflows/ci.yml/badge.svg)](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/actions/workflows/ci.yml)
 [![Live Demo](https://img.shields.io/badge/demo-online-success)](https://portfolio-cms-cjr4.onrender.com)
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-100%2F100%2F100%2F100-brightgreen?logo=lighthouse&logoColor=white)](docs/lighthouse/SUMMARY.md)
 ![Java](https://img.shields.io/badge/Java-17-007396?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F?logo=springboot&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?logo=postgresql&logoColor=white)
@@ -243,6 +244,7 @@ portfolio-cms/
 
 ## 工夫した点
 
+- **Lighthouse 100/100/100/100（Mobile + Desktop）：** Performance / Accessibility / Best Practices / SEO の全カテゴリ満点。WebP 配信 + `<picture>` フォールバック、lazy loading + `fetchpriority`、WCAG AA 4.5:1 を満たす色コントラスト調整まで詰めた結果。詳細: [docs/lighthouse/SUMMARY.md](docs/lighthouse/SUMMARY.md)
 - **論理削除 + 部分インデックス：** `deleted_at IS NULL` 条件付きインデックスで、公開クエリに削除済みレコードを読ませない。
 - **`open-in-view: false` + `JOIN FETCH`：** ビューでの遅延ロードを禁止し、リポジトリ層で `category` / `images` を明示的に先読み。N+1 と `LazyInitializationException` を構造的に排除。
 - **シードまでコード管理：** Flyway V3 / V4 で公開LP本文（7カテゴリ・19スライド）まで投入。誰がチェックアウトしても `./mvnw spring-boot:run` 一発で同じ画面が再現できる。
