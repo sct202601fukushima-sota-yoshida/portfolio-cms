@@ -13,7 +13,7 @@ services:
     branch: main
     dockerfilePath: ./Dockerfile
     autoDeploy: true
-    healthCheckPath: /
+    healthCheckPath: /actuator/health
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod

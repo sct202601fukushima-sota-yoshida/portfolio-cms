@@ -40,6 +40,32 @@ server:
   error:
     include-message: always
 
+# Spring Boot Actuator
+# /actuator/health (運用ヘルスチェック) と /actuator/info (バージョン情報) のみ公開する。
+# 他の管理系エンドポイントは expose しないことで攻撃面を最小化。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: never        # 内部依存の詳細はレスポンスに含めない
+    info:
+      enabled: true
+  info:
+    env:
+      enabled: true              # info.app.* を含める
+    java:
+      enabled: true              # Java バージョン情報を含める
+
+info:
+  app:
+    name: Portfolio CMS
+    description: Vibe coding portfolio (Java + Spring Boot + AI)
+    repository: https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms
+
 app:
   upload:
     dir: ${UPLOAD_DIR:./uploads}

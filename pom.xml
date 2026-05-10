@@ -85,6 +85,12 @@
 			<version>0.24.0</version>
 		</dependency>
 		<dependency>
+			<!-- Spring Boot Actuator: 運用観点のエンドポイントを提供。
+			     本プロジェクトでは /actuator/health と /actuator/info のみ公開する。 -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -109,6 +115,16 @@
 						</exclude>
 					</excludes>
 				</configuration>
+				<executions>
+					<execution>
+						<!-- build-info goal で META-INF/build-info.properties を生成。
+						     /actuator/info で version / build time が見られるようになる。 -->
+						<id>build-info</id>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
