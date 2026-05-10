@@ -1,13 +1,36 @@
 /* =============================================================
    Portfolio CMS — Design System
    φ (1.618033988749895) を基準にした寸法 / 余白 / タイポ
+
+   --------------------------------------------------------------
+   Cascade architecture (CSS Cascade Layers)
+   --------------------------------------------------------------
+   レイヤーは下に行くほど優先度が高い。!important を使わずに
+   上書き関係を「宣言順序」で説明できる構造にしてある。
+
+     reset      … ブラウザ既定値の正規化
+     tokens     … :root の CSS カスタムプロパティ（φ ベースのデザイントークン）
+     base       … 素のタグ（html/body/見出し/リンク/img）
+     components … 名前付きコンポーネント（.hero, .slide-card, .form, ...）
+     overrides  … メディアクエリによる上書き（responsive / dark / print）
+
+   このおかげで「.foo の上書きが効かない」という詰まりを構造的に防止できる。
    ============================================================= */
 
-/* ---- Reset ---- */
-*, *::before, *::after { box-sizing: border-box; }
-* { margin: 0; padding: 0; }
+@layer reset, tokens, base, components, overrides;
 
-/* ---- Tokens ---- */
+/* =============================================================
+   Layer: reset
+   ============================================================= */
+@layer reset {
+    *, *::before, *::after { box-sizing: border-box; }
+    * { margin: 0; padding: 0; }
+}
+
+/* =============================================================
+   Layer: tokens
+   ============================================================= */
+@layer tokens {
 :root {
     /* φ scale ----------------------------------- */
     --phi:        1.618;
@@ -79,8 +102,13 @@
     /* Easing ------------------------------------- */
     --ease: cubic-bezier(.4, 0, .2, 1);
 }
+} /* end @layer tokens */
 
-/* ---- Base ---- */
+/* =============================================================
+   Layer: base
+   ============================================================= */
+@layer base {
+
 html { scroll-behavior: smooth; }
 
 html, body {
@@ -117,6 +145,12 @@ h1, h2, h3, h4 {
     font-weight: 700;
     letter-spacing: -0.01em;
 }
+} /* end @layer base */
+
+/* =============================================================
+   Layer: components
+   ============================================================= */
+@layer components {
 
 /* ---- Container ---- */
 .container { max-width: var(--container-w); margin: 0 auto; padding: 0 var(--container-px); }
@@ -641,6 +675,15 @@ h1, h2, h3, h4 {
     color: var(--color-gold-text);   /* WCAG AA on paper */
     margin: 0 var(--s-2);
 }
+} /* end @layer components */
+
+/* =============================================================
+   Layer: overrides
+   メディアクエリ（responsive / dark / print）はすべてこのレイヤーに集約。
+   コンポーネント層よりも宣言順序で後（=優先度が高い）であるため、
+   !important なしで component の値を上書きできる。
+   ============================================================= */
+@layer overrides {
 
 /* ---- Responsive ---- */
 @media (max-width: 720px) {
@@ -818,3 +861,5 @@ h1, h2, h3, h4 {
         margin: 1.2cm 1.5cm;
     }
 }
+
+} /* end @layer overrides */
