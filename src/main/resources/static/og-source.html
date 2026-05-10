@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--
+  OG image source. Render this page at 1200x630, then save as /og.png.
+  Generation command:
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+      --headless --disable-gpu --hide-scrollbars \
+      --window-size=1200,630 \
+      --screenshot=src/main/resources/static/og.png \
+      file://$(pwd)/src/main/resources/static/og-source.html
+-->
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px;
+    background: #1a1f2c;
+    color: #fbfaf6;
+    font-family: -apple-system, "Hiragino Sans", sans-serif;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+  }
+  h1 {
+    font-size: 96px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  .accent { color: #b8985a; }
+  p {
+    margin-top: 24px;
+    font-size: 26px;
+    font-weight: 300;
+    color: rgba(251, 250, 246, 0.78);
+    letter-spacing: 0.02em;
+    max-width: 640px;
+    line-height: 1.5;
+  }
+  .meta {
+    margin-top: 48px;
+    font-family: "SF Mono", ui-monospace, monospace;
+    font-size: 18px;
+    color: #b8985a;
+    letter-spacing: 0.12em;
+  }
+  /* Blueprint diagram, mirrored from hero */
+  svg.bp {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 540px;
+    height: auto;
+    color: rgba(212, 184, 131, 0.78);
+  }
+  svg.bp .bp-shapes rect, svg.bp .bp-shapes line { fill: none; stroke: currentColor; stroke-width: 1; }
+  svg.bp .bp-shapes line { stroke-opacity: 0.6; }
+  svg.bp .bp-spiral { fill: none; stroke: currentColor; stroke-width: 0.7; stroke-opacity: 0.55; stroke-dasharray: 1.5 1.5; }
+  svg.bp .bp-dims line { stroke: currentColor; stroke-width: 0.4; stroke-opacity: 0.45; }
+  svg.bp text {
+    fill: currentColor;
+    font-family: "SF Mono", ui-monospace, monospace;
+    font-size: 5.5px;
+    letter-spacing: 0.05em;
+  }
+  svg.bp .bp-label-inner { font-size: 5px; opacity: 0.7; }
+  svg.bp .bp-title { font-size: 4.2px; opacity: 0.6; letter-spacing: 0.18em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+  <div>
+    <h1>自己紹介<span class="accent">.</span><br>ポートフォリオ</h1>
+    <p>設計・実装・運用を一人で通したフルスタック CMS — designed on the golden ratio</p>
+    <p class="meta">φ = 1.6180339887...</p>
+  </div>
+
+  <svg class="bp" viewBox="0 0 200 138" preserveAspectRatio="xMaxYMid meet">
+    <g class="bp-shapes">
+      <rect x="22" y="20" width="161.8" height="100"/>
+      <line x1="122" y1="20" x2="122" y2="120"/>
+      <line x1="122" y1="81.8" x2="183.8" y2="81.8"/>
+      <line x1="160.2" y1="81.8" x2="160.2" y2="120"/>
+      <path d="M 22 120 A 100 100 0 0 1 122 20" class="bp-spiral"/>
+      <path d="M 122 20 A 61.8 61.8 0 0 1 183.8 81.8" class="bp-spiral"/>
+      <path d="M 183.8 81.8 A 38.2 38.2 0 0 1 145.6 120" class="bp-spiral"/>
+    </g>
+    <g class="bp-dims">
+      <line x1="22" y1="128" x2="183.8" y2="128"/>
+      <line x1="22" y1="125" x2="22" y2="131"/>
+      <line x1="183.8" y1="125" x2="183.8" y2="131"/>
+      <line x1="191" y1="20" x2="191" y2="120"/>
+      <line x1="188" y1="20" x2="194" y2="20"/>
+      <line x1="188" y1="120" x2="194" y2="120"/>
+    </g>
+    <g class="bp-labels">
+      <text x="102.9" y="136" text-anchor="middle">a · φ = 1.618</text>
+      <text x="195" y="73" text-anchor="middle" transform="rotate(90 195 73)">a = 1.000</text>
+      <text x="72" y="74" text-anchor="middle" class="bp-label-inner">a</text>
+      <text x="152.9" y="55" text-anchor="middle" class="bp-label-inner">a/φ</text>
+      <text x="22" y="14" class="bp-title">FIG. φ — golden subdivision</text>
+    </g>
+  </svg>
+</body>
+</html>

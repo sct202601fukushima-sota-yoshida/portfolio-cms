@@ -1,0 +1,644 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+    background: rgb(235,235,235);
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+}
+
+header {
+  	background-color: rgba(0,51,102,0.9);
+  	height: 60px;
+  	width: 100%;
+	position: fixed;
+  	z-index: 10;
+}
+
+header h1 {
+	width: 260px;
+	height: 50px;
+	display: block;
+	margin: auto 0;
+	padding-top: 4px;
+}
+
+header h1 img {
+	width: 100%;
+	height: auto;
+}
+
+nav ul {
+	float: right;
+	position: fixed;
+	right: 20px;
+	top: 4px;
+}
+
+nav li {
+	list-style: none;
+	display: block;
+	padding: 0 7px;
+	color: white;
+	font-weight: 700;
+	font-size: 1.1rem;
+	float: left;
+}
+
+nav li a {
+	text-decoration: none;
+	color: white;
+}
+
+.drawr {
+	display: none;
+}
+
+.scroll-area {
+  	width: 100%;
+  	height: 100vh;
+  	overflow: auto;
+}
+
+.box {
+  	width: 100%;
+  	height: 100vh;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	flex-direction: column;
+}
+
+.topper {
+  	background-image: url(../images/top-base.jpg);
+  	background-size: cover;
+  	background-position: center;
+  	background-repeat: no-repeat;
+    position: relative;
+}
+
+.topper::before {
+  	content: '';
+  	background-color: rgba(0,0,0,0.4);
+  	position: absolute;
+  	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left: 0;
+}
+
+.topper-contents {
+	z-index: 5;
+	margin: 0 auto;
+}
+
+.topper-contents img {
+	width: 100%;
+	height: auto;
+}
+
+.top-text {
+	z-index: 5;
+	color: white;
+	font-size: 25px;
+	font-weight: 700;
+	text-align: center;
+	text-shadow: 1px 2px 2px #808080;
+	width: 70%;
+}
+
+#contents {
+	margin: 0 auto;
+	max-width: 1040px;
+}
+
+#contents h2 {
+  	padding: .75rem 0;
+  	background-color: #003366;
+  	color: #ffffff;
+  	font-size: 1.618rem;
+  	font-weight: 700;
+	text-align: center;
+}
+
+#contents h3 {
+  	padding: 1.5rem 0;
+  	color: #ffffff;
+  	font-size: 1.333rem;
+  	font-weight: 700;
+	text-align: center;
+}
+
+#contents p {
+	line-height: 1.618rem;
+}
+
+
+@-webkit-keyframes modify{
+      0% { padding-top: 60px; margin-top: -60px; }
+    100% { padding-top: 0; margin-top: 0; }
+}
+@keyframes  modify{
+      0% { padding-top: 60px; margin-top: -60px; }
+    100% { padding-top: 0; margin-top: 0; }
+}
+
+#about:target {
+    -webkit-animation: modify 0.1s;
+    animation: modify 0.1s;
+}
+
+#blog:target {
+    -webkit-animation: modify 0.1s;
+    animation: modify 0.1s;
+}
+
+#estate:target {
+    -webkit-animation: modify 0.1s;
+    animation: modify 0.1s;
+}
+
+#contact:target {
+    -webkit-animation: modify 0.1s;
+    animation: modify 0.1s;
+}
+
+
+
+.text {
+	width: 80%;
+	text-align: center;
+	margin: 0 auto;
+}
+
+
+.statement-area {
+	overflow: hidden;
+}
+
+.statement-container {
+	width: 100%;
+}
+
+.corporate-statement {
+	width: 100%;
+	height: 245px;
+	margin: 0 auto;
+	background-color: #003366;
+	text-align: center;
+}
+
+.copy-text {
+	padding: 50px 20px 20px;
+	color: white;
+	font-size: 1.25rem;
+}
+
+.corporate-statement span {
+	font-weight: 700;
+	font-size: 1.5rem;
+}
+
+.statement {
+	color: white;
+	display: block;
+	font-size: 2rem;
+	line-height: 1.5rem;
+	font-weight: 700;
+	float: left;
+}
+
+.statement-point1 {
+	width: 50%;
+	float: left;
+}
+
+.statement-point2 {
+	width: 50%;
+	height: 398px;
+	float: left;
+	background-color: #1e608e;
+	color: white;
+	text-align: center;
+}
+
+.copy-text2 {
+	padding: 35px 25px;
+}
+
+.statement-point2 span {
+	font-weight: 700;
+	font-size: 1.5rem;
+}
+
+
+.review-area {
+	overflow: hidden;
+}
+
+.review-container {
+	width: 100%;
+	height: 643px;
+}
+
+.review {
+	width: 33.3%;
+	height: 643px;
+	background-color: #ffffff;
+	box-shadow: 0 0 1.5px inset;
+	overflow: hidden;
+	float: left;
+}
+
+.review-text span {
+	font-weight: 700;
+	font-size: 1.3em;
+}
+
+.review-text {
+	text-align: center;
+	padding: 5px 10px;
+	font-size: 1em;
+	line-height: 1.5em;
+}
+
+.blog-area {
+    overflow: hidden;
+}
+
+.blog-container {
+	width: 100%;
+}
+
+/*ブログサムネイル効果：透かし、枠、ズーム*/
+
+.thumbnail-card {
+  position: relative;
+  overflow: hidden;
+  width: 25%;
+  height: 214.1px;
+	float: left;
+  background: linear-gradient(135deg, rgba(0,51,102,1) 0%, rgba(0,127,255,1) 100%);
+}
+.thumbnail-wrapper {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.thumbnail-wrapper::after {
+  transition: 0.8s;
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 0;
+  height: 0;
+  border: 1px solid #fff;
+  opacity: 0;
+}
+.thumbnail-wrapper img{
+  transition: 0.5s;
+  transform: scale(1);
+  display: block;
+  width: 100%;
+	height: auto;
+  opacity: 1;
+}
+.more-text {
+  	transition: 0.8s;
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	color: #fff;
+  	font-size: 1rem;
+	font-weight: 700;
+  	letter-spacing: -1px;
+  	text-align: center;
+  	opacity: 0;
+}
+
+.more-text a {
+	text-decoration: none;
+	color: white;
+}
+
+.thumbnail-card:hover .thumbnail-wrapper::after {
+  opacity: 0.8;
+  width: calc(100% - 32px);
+  height: calc(100% - 32px);
+}
+.thumbnail-card:hover .thumbnail-wrapper img {
+  opacity: 0.6;
+  transform: scale(1.1);
+}
+.thumbnail-card:hover .more-text {
+  opacity: 1;
+  letter-spacing: 4px;
+}
+
+/*ブログサムネイル効果：透かし、枠、ズーム*/
+
+.staff-area {
+	overflow: hidden;
+}
+
+.staff-container {
+	width: 100%;
+	height: 643px;
+}
+
+.staff {
+	width: 25%;
+	height: 398px;
+	background-color: #ffffff;
+	box-shadow: 0 0 1.5px inset;
+	float: left;
+}
+
+.staff-sub {
+	width: 100%;
+	height: 245px;
+	background-color: #1e608e;
+	color: white;
+	clear: both;
+}
+
+.staff-text span {
+	font-weight: 700;
+	font-size: 1.1em;
+}
+
+.staff-text {
+	text-align: center;
+	padding: 3px 2.5px;
+	font-size: 0.8em;
+	line-height: 1.2em;
+}
+
+/*物件情報*/
+
+.estate-area {
+	overflow: hidden;
+}
+
+.estate-container {
+	width: 100%;
+	height: auto;
+}
+
+.estate1 {
+	width: 61.8%;
+	height: auto;
+	float: left;
+}
+
+.estate2 {
+	width: 38.2%;
+	height: auto;
+	float: left;
+}
+
+.estate3 {
+	width: 61.8%;
+	height: auto;
+	float: left;
+}
+
+.estate4 {
+	width: 38.2%;
+	height: auto;
+	float: left;
+}
+
+.estate-card {
+  	position: relative;
+  	overflow: hidden;
+	background: linear-gradient(135deg, rgba(0,51,102,1) 0%, rgba(0,127,255,1) 100%);
+}
+
+.estate-wrapper {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.estate-wrapper::after {
+  transition: 0.8s;
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 0;
+  height: 0;
+  border: 1px solid #fff;
+  opacity: 0;
+}
+.estate-wrapper img{
+  transition: 0.5s;
+  transform: scale(1);
+  display: block;
+  max-width: 100%;
+  opacity: 1;
+}
+.estate-text {
+  	transition: 0.8s;
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	color: #fff;
+  	font-size: 16px;
+	font-weight: 700;
+  	letter-spacing: -1px;
+  	text-align: center;
+  	opacity: 0;
+}
+
+.estate-text a {
+	text-decoration: none;
+	color: white;
+}
+
+.estate-card:hover .estate-wrapper::after {
+  opacity: 0.8;
+  width: calc(100% - 32px);
+  height: calc(100% - 32px);
+}
+.estate-card:hover .estate-wrapper img {
+  opacity: 0.6;
+  transform: scale(1.1);
+}
+.estate-card:hover .estate-text {
+  opacity: 1;
+  letter-spacing: 4px;
+}
+
+/*物件情報*/
+
+.promotion-area {
+	overflow: hidden;
+}
+
+.promotion-container {
+	width: 100%;
+	height: 643px;
+}
+
+.promotion {
+	width: 25%;
+	height: 398px;
+	float: left;
+}
+
+.promotion-sub {
+	width: 100%;
+	height: 245px;
+	color: white;
+	background-color: #1e608e;
+	clear: both;
+}
+
+.promotion-sub a {
+	color: white;
+}
+
+.contact-area{
+	margin-bottom: 21px;
+	overflow: hidden;
+}
+
+.contact-container {
+	width: 50%;
+	height: 1162px;
+	float: left;
+}
+
+.info {
+	width: 100%;
+	height: 520px;
+	background-color: #1e608e;
+	box-shadow: 0 0 1.5px inset;
+	color: white;
+	float: left;
+}
+
+.info-text {
+	text-align: center;
+	font-weight: 700;
+	padding: 15px 0;
+}
+
+.info-text span {
+	font-size: 1.5rem;
+}
+
+.info-text img {
+	margin-top: 15px;
+}
+
+.map {
+	width: 100%;
+	height: 61.8vw;
+	float: left;
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+ 
+.map iframe,
+.map object,
+.map embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.line-at {
+	width: 100%;
+	height: 30.2vw;
+	background-color: #00b900;
+	box-shadow: 0 0 1.5px inset;
+	float: left;
+}
+
+.line-at-container {
+	width: 61.7%;
+	float: left;
+}
+
+.line-at-container img {
+	width: 100%;
+	height: auto;
+} 
+
+.line-at-qr {
+	width: 38.3%;
+	float: left;
+}
+
+.line-at-qr img {
+	width: 100%;
+	height: auto;
+}
+
+footer {
+	overflow: hidden;
+	background-color: rgb(0,51,102);
+	width: 100%;
+    margin-top: 21px;
+}
+
+.footer-contents {
+	color: #ffffff;
+  	max-width: 1040px;
+	margin: 0 auto;
+}
+
+.gaiyou {
+	width: 40%;
+	float: left;
+}
+
+.gaiyou h3 {
+	padding: 0 20px;
+}
+
+.gaiyou p {
+	padding: 0 30px;
+	font-size: 1.1rem;
+	line-height: 1.618rem;
+}
+
+.gaiyou img {
+	width: 90%;
+	height: auto;
+	padding-left: 15px;
+}
+
+.col {
+	width: 30%;
+	float: left;
+}
+
+.col ul {
+	padding: 10px 10px;
+}
+
+.col ul li {
+	list-style: none;
+}
+
+.col ul li a {
+	text-decoration: none;
+	color: white;
+	font-size: 1.25rem;
+}

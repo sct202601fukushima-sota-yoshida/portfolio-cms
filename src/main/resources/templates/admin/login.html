@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('ログイン')}"></head>
+<body>
+
+<header th:replace="~{layout/fragments :: header}"></header>
+
+<main class="site-main">
+    <div class="container narrow">
+        <h1>管理者ログイン</h1>
+
+        <p th:if="${param.error}" class="alert alert-error">
+            ログインに失敗しました。ユーザー名またはパスワードが違います。
+        </p>
+        <p th:if="${param.logout}" class="alert alert-info">
+            ログアウトしました。
+        </p>
+
+        <form th:action="@{/admin/login}" method="post" class="form">
+            <div class="form-group">
+                <label for="username">ユーザー名</label>
+                <input type="text" id="username" name="username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">ログイン</button>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{layout/fragments :: footer}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: portfolio-cms
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/portfolio_cms
+    username: ${DB_USER:glad.}
+    password: ${DB_PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+    show-sql: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+app:
+  upload:
+    dir: ${UPLOAD_DIR:./uploads}
+  admin:
+    # 環境変数 INITIAL_ADMIN_USERNAME / INITIAL_ADMIN_PASSWORD で上書き可能。
+    # 本番デプロイ時は必ず INITIAL_ADMIN_PASSWORD を強いパスワードへ差し替えること。
+    username: ${INITIAL_ADMIN_USERNAME:admin}
+    password: ${INITIAL_ADMIN_PASSWORD:admin123}
+
+logging:
+  level:
+    root: INFO
+    com.portfolio.cms: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG

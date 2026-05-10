@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('スライド一覧')}"></head>
+<body>
+
+<header th:replace="~{layout/fragments :: header}"></header>
+
+<main class="site-main">
+    <div class="container">
+        <div class="page-header">
+            <h1>スライド管理</h1>
+            <a th:href="@{/admin/slides/new}" class="btn btn-primary">新規登録</a>
+        </div>
+
+        <p th:if="${message}" class="alert alert-success" th:text="${message}"></p>
+
+        <p th:if="${#lists.isEmpty(slides)}" class="empty-state">
+            まだスライドが登録されていません。
+        </p>
+
+        <table th:unless="${#lists.isEmpty(slides)}" class="data-table">
+            <thead>
+            <tr>
+                <th>順</th>
+                <th>カテゴリ</th>
+                <th>タイトル</th>
+                <th>画像</th>
+                <th>公開</th>
+                <th>更新日時</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="slide : ${slides}">
+                <td th:text="${slide.sortOrder}">0</td>
+                <td th:text="${slide.category.name}">カテゴリ</td>
+                <td th:text="${slide.title}">タイトル</td>
+                <td th:text="${#lists.size(slide.images)}">0</td>
+                <td>
+                    <span th:if="${slide.isActive}" class="badge badge-active">公開</span>
+                    <span th:unless="${slide.isActive}" class="badge badge-inactive">非公開</span>
+                </td>
+                <td th:text="${#temporals.format(slide.updatedAt, 'yyyy-MM-dd HH:mm')}">2026-04-19</td>
+                <td class="actions">
+                    <a th:href="@{'/admin/slides/' + ${slide.id} + '/edit'}" class="btn btn-small">編集</a>
+                    <form th:action="@{'/admin/slides/' + ${slide.id} + '/delete'}" method="post"
+                          onsubmit="return confirm('このスライドを削除しますか？');">
+                        <button type="submit" class="btn btn-small btn-danger">削除</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer th:replace="~{layout/fragments :: footer}"></footer>
+
+</body>
+</html>

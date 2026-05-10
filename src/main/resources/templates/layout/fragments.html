@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+
+    <title th:text="${title} ?: '吉田 颯汰 — 自己紹介ポートフォリオ (Portfolio CMS)'">Portfolio CMS</title>
+
+    <!-- SEO -->
+    <meta name="description"
+          content="吉田 颯汰の自己紹介ポートフォリオ。Spring Boot + PostgreSQL + Spring Security で構築した自作 CMS を、デザイン・実装・運用まで一人で通したフルスタック作品。">
+    <meta name="author" content="吉田 颯汰">
+    <meta name="theme-color" content="#1a1f2c">
+
+    <!-- Open Graph (Facebook / LinkedIn / 各種SNS) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title"
+          th:content="${title} ?: '吉田 颯汰 — 自己紹介ポートフォリオ'">
+    <meta property="og:description"
+          content="設計・実装・運用を一人で通したフルスタック CMS。黄金比をベースにしたデザインシステムと Spring Boot 製 CMS を統合した自己紹介ポートフォリオ。">
+    <meta property="og:image" th:content="@{/og.png}" content="/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:site_name" content="Portfolio CMS — 吉田 颯汰">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title"
+          th:content="${title} ?: '吉田 颯汰 — 自己紹介ポートフォリオ'">
+    <meta name="twitter:description"
+          content="設計・実装・運用を一人で通したフルスタック CMS — designed on the golden ratio.">
+    <meta name="twitter:image" th:content="@{/og.png}" content="/og.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="alternate icon" type="image/png" th:href="@{/og.png}">
+    <link rel="apple-touch-icon" th:href="@{/og.png}">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:fragment="header" class="site-header">
+    <div class="container">
+        <a class="site-logo" th:href="@{/}">Portfolio</a>
+        <nav class="site-nav">
+            <a th:href="@{/}">公開ページ</a>
+            <span sec:authorize="isAuthenticated()">
+                <a th:href="@{/admin/slides}">管理</a>
+                <form th:action="@{/admin/logout}" method="post" class="logout-form">
+                    <button type="submit" class="btn-link">ログアウト</button>
+                </form>
+            </span>
+            <span sec:authorize="!isAuthenticated()">
+                <a th:href="@{/admin/login}">ログイン</a>
+            </span>
+        </nav>
+    </div>
+</header>
+
+<footer th:fragment="footer" class="site-footer">
+    <div class="container">
+        <!-- Contact links — デプロイ前に href を実 URL へ差し替えてください -->
+        <nav class="site-footer__contact" aria-label="Contact">
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span class="site-footer__sep">·</span>
+            <a href="mailto:contact@example.com">メール</a>
+            <span class="site-footer__sep">·</span>
+            <a th:href="@{/}">公開ページ</a>
+        </nav>
+        <p class="site-footer__sig">Designed on<span class="site-footer__phi">φ = 1.618…</span>&middot; &copy; 2026 Portfolio CMS</p>
+    </div>
+</footer>
+
+</body>
+</html>

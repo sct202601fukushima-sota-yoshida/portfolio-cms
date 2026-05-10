@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('スライド編集')}"></head>
+<body>
+
+<header th:replace="~{layout/fragments :: header}"></header>
+
+<main class="site-main">
+    <div class="container narrow">
+        <h1 th:text="${mode == 'create'} ? 'スライド新規登録' : 'スライド編集'">スライド編集</h1>
+
+        <form th:action="${mode == 'create'} ? @{/admin/slides} : @{'/admin/slides/' + ${slideForm.id}}"
+              th:object="${slideForm}"
+              method="post"
+              enctype="multipart/form-data"
+              class="form">
+
+            <div class="form-group">
+                <label for="categoryId">カテゴリ <span class="required">*</span></label>
+                <select id="categoryId" th:field="*{categoryId}" required>
+                    <option value="">-- 選択 --</option>
+                    <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                </select>
+                <p class="field-error" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="title">タイトル <span class="required">*</span></label>
+                <input type="text" id="title" th:field="*{title}" maxlength="100" required>
+                <p class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="description">説明文</label>
+                <textarea id="description" th:field="*{description}" rows="8"></textarea>
+                <p class="help-text markdown-help">
+                    <strong>Markdown 対応：</strong>
+                    <code>**太字**</code>
+                    <code>*斜体*</code>
+                    <code>[ラベル](URL)</code>
+                    <code>- 箇条書き</code>
+                    <code>1. 番号付き</code>
+                    <code>&gt; 引用</code>
+                    <code>`コード`</code>
+                    <span class="markdown-help__note">（単一改行は <code>&lt;br&gt;</code> に変換）</span>
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="sortOrder">表示順</label>
+                <input type="number" id="sortOrder" th:field="*{sortOrder}" min="0">
+                <p class="field-error" th:if="${#fields.hasErrors('sortOrder')}" th:errors="*{sortOrder}"></p>
+            </div>
+
+            <div class="form-group form-check">
+                <label>
+                    <input type="checkbox" th:field="*{isActive}">
+                    公開する
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="images">画像を追加</label>
+                <input type="file" id="images" name="images" multiple accept="image/*">
+                <p class="help-text">既存の画像はそのまま保持されます。新規画像を追加できます。</p>
+            </div>
+
+            <div th:if="${slide != null and not #lists.isEmpty(slide.images)}" class="form-group">
+                <label>現在の画像</label>
+                <div class="image-thumbnails">
+                    <img th:each="img : ${slide.images}"
+                         th:src="@{'/uploads/' + ${img.fileName}}"
+                         th:alt="${slide.title}">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">保存</button>
+                <a th:href="@{/admin/slides}" class="btn btn-secondary">キャンセル</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{layout/fragments :: footer}"></footer>
+
+</body>
+</html>

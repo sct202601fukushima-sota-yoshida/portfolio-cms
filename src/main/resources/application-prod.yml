@@ -1,0 +1,50 @@
+# =============================================================
+# Production profile
+# 起動時に SPRING_PROFILES_ACTIVE=prod を指定すると有効になる。
+#
+# 必要な環境変数:
+#   DB_URL                  例) jdbc:postgresql://host:5432/dbname
+#   DB_USER
+#   DB_PASSWORD
+#   INITIAL_ADMIN_USERNAME
+#   INITIAL_ADMIN_PASSWORD
+#   UPLOAD_DIR              例) /var/portfolio-cms/uploads
+# =============================================================
+
+spring:
+  datasource:
+    # Render / Supabase / Neon 等を想定。${DB_URL} は完全修飾の JDBC URL。
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/portfolio_cms}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+    show-sql: false
+
+  thymeleaf:
+    # 本番はテンプレートをキャッシュする（毎リクエストで再パースしない）
+    cache: true
+
+  flyway:
+    enabled: true
+    # 本番では新規マイグレーションのみ流す。既存DBに対しては baseline を切らない設計。
+    baseline-on-migrate: false
+
+server:
+  # エラーレスポンスに詳細を含めない（情報漏洩防止）
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+  # リバースプロキシ配下を想定し、X-Forwarded-* を有効化
+  forward-headers-strategy: framework
+
+logging:
+  level:
+    root: INFO
+    com.portfolio.cms: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN

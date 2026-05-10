@@ -1,0 +1,542 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 基本レイアウト ここから↓ */
+body {
+    background: #e0e0e0;
+  	box-sizing: border-box;
+    font-family: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN","Hiragino Mincho Pro",HGS明朝E,メイリオ,Meiryo,serif;
+  	margin: 0;
+  	padding: 0;
+}
+
+#contents {
+	margin: 0 auto;
+	max-width: 980px;
+}
+
+header {
+  	background-color: rgba(34,49,52,0.9);
+  	height: 7vmax;
+  	width: 100%;
+	position: fixed;
+  	z-index: 10;
+}
+
+header h1 {
+	margin: 0 0 1vmax 2vmax;
+	padding-top: 1.8vmax;
+	color: white;
+	font-size: 3vmax;
+}
+
+.scroll-area {
+  	width: 100%;
+  	height: 100vh;
+  	overflow: auto;
+  	scroll-behavior: smooth;
+}
+
+.box {
+  	width: 100%;
+  	height: 100vh;
+  	color: #fff;
+  	/*font-size: 100px;*/
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	flex-direction: column;
+}
+
+.topper {
+  	background-image: url(../images/top.jpg);
+  	background-size: cover;
+  	background-position: center;
+  	background-repeat: no-repeat;
+    position: relative;
+}
+
+.topper::before {
+  	content: '';
+  	background-color: rgba(0,0,0,.6);
+  	position: absolute;
+  	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left: 0;
+}
+
+.topper p {
+    /*font-size: 60px;*/
+	font-size: 4.5vmax;
+    text-align: center;
+  	margin: 0;
+    padding-top: 5vmax;
+  	width: 83%;
+  	line-height: 1;
+    z-index: 5;
+}
+
+.topper p:nth-child(2) {
+	/*font-size: 24px;*/
+	font-size: 2.3vmax;
+	text-align: left;
+	background-color: rgba(0,0,0,.4);
+	/*margin-top: 50px;*/
+	margin-top: 2vmax;
+  	padding: 1.5vmax;
+  	width: 60%;
+  	line-height: 1;
+	z-index: 5;
+}
+
+.topper p:nth-child(3) {
+	/*font-size: 20px;*/
+	font-size: 1.5vmax;
+	text-align: right;
+  	/*padding: 10px;*/
+	padding: 0.5vmax;
+  	width: 60%;
+  	line-height: 1;
+	z-index: 5;
+}
+
+@media all and (-ms-high-contrast:none){ /* IE11 */
+  *::-ms-backdrop, .topper p {
+    font-size: 30px;
+    text-align: center;
+  	margin: 0;
+    padding-top: 5vmax;
+  	width: 83%;
+  	line-height: 1;
+    z-index: 5;
+}
+
+.topper p:nth-child(2) {
+	font-size: 12px;
+	text-align: left;
+	background-color: rgba(0,0,0,.4);
+	margin-top: 50px;
+	margin-top: 2vmax;
+  	padding: 1.5vmax;
+  	width: 60%;
+  	line-height: 1;
+	z-index: 5;
+}
+
+.topper p:nth-child(3) {
+	font-size: 8px;
+	text-align: right;
+  	padding: 10px;
+	padding: 0.5vmax;
+  	width: 60%;
+  	line-height: 1;
+	z-index: 5;
+}
+}
+
+
+#contents h2 {
+  position: relative;
+  padding: .75em 2em;
+  background-color: #8f2e14;
+  color: #ffffff;
+  font-size: 1.618rem;
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
+}
+
+#contents h2::before,
+#contents h2::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  border-style: solid;
+  border-color: transparent;
+}
+
+#contents h3 {
+  font-size: 1.333rem;
+  font-weight: 700;
+}
+
+#contents p {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.618rem;
+}
+
+blockquote {
+    position: relative;
+    padding: 10px 12px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    font-style: italic;
+    color: #464646;
+    border-left: solid 40px #c4c4c4;
+    background: #f3f3f3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.19);
+}
+
+blockquote:before{
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: -45px;
+    transform: translateY(-50%);
+    vertical-align: middle;
+    content: "“";
+    color: #FFF;
+    font-size: 60px;
+    line-height: 1;
+}
+
+blockquote p {
+    position: relative;
+    padding: 0;
+    margin: 10px 0;
+    z-index: 3;
+    line-height: 1.7;
+}
+
+blockquote cite {
+    display: block;
+    text-align: right;
+    color: #888888;
+    font-size: 0.9rem;
+}
+
+footer {
+	text-align: center;
+}
+
+/* 基本レイアウト ここまで↑ */
+
+/* 登場人物紹介 ここから↓ */
+
+#caracter {
+  margin: 25px auto 0;
+  position: relative;
+  width: 95%;
+}
+
+.c-clearfix:before,
+.c-clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.c-clearfix:after {
+  clear: both;
+}
+
+.caracter-card {
+  background-color: #fff;
+  padding: 30px;
+  position: relative;
+  border-radius: 3px;
+  margin: 20px auto;
+  box-shadow: 0 0 5px rgba(75, 75, 75, .07);
+  z-index: 1;
+  width: 95%;
+}
+
+.caracter-body {
+  display: inline-block;
+  float: right;
+  width: 100%;
+}
+
+.name-content {
+  font-size: 1.618rem;
+  font-weight: 700;
+  /*letter-spacing: -0.05em;*/
+  line-height: 2rem;
+  padding: 5px;
+}
+
+.caracter-info {
+  display: inline-block;
+  line-height: 23px;
+	font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
+.caracter-media {
+  float: left;
+	width: 100%;
+	height: auto;	
+  margin: auto;
+  padding-top: 0.3rem;
+}
+
+.card-shadow {
+  background-color: #fff;
+  box-shadow: 0 2px 25px 2px rgba(0, 0, 0, 1), 0 2px 50px 2px rgba(0, 0, 0, 1), 0 0 100px 3px rgba(0, 0, 0, .25);
+  height: 1px;
+  margin: -1px auto 0;
+  width: 98%;
+  z-index: -1;
+}
+
+
+/* 登場人物紹介 ここまで↑ */
+
+/* キャラクターセリフ1 ここから↓ */
+
+.actor1-container {
+  background: #fff;
+  border-radius: 3px;
+  margin: 0 auto 20px;
+  width: 95%;
+}
+
+.actor1,
+.actor1--no-cover {
+  margin: 0 auto;
+  padding-top: .125rem;
+  width: 83%;
+}
+
+.actor1 h3::before,
+.actor1--no-cover h3::before {
+  background: url(../images/ivan.jpg);
+  background-size: cover;
+  border-radius: 50%;
+  content: " ";
+  display: inline-block;
+  height: 32px;
+  margin-right: .5rem;
+  position: relative;
+  top: 8px;
+  width: 32px;
+}
+.actor1 h3 {
+  color: #fff;
+}
+
+.actor1-body {
+  	margin: 0 auto;
+    padding: 5px 0;
+  	width: 86%;
+}
+
+/* キャラクターセリフ1 ここまで↑ */
+
+/* キャラクターセリフ2 ここから↓ */
+
+.actor2-container {
+  background: #fff;
+  border-radius: 3px;
+  margin: 0 auto 20px;
+  width: 95%;
+}
+
+.actor2,
+.actor2--no-cover {
+  margin: 0 auto;
+  padding-top: .125rem;
+  width: 83%;
+}
+
+.actor2 h3::before,
+.actor2--no-cover h3::before {
+  background: url("../images/alexei.jpg");
+  background-size: cover;
+  border-radius: 50%;
+  content: " ";
+  display: inline-block;
+  height: 32px;
+  margin-right: .5rem;
+  position: relative;
+  top: 8px;
+  width: 32px;
+}
+.actor2 h3 {
+  color: #fff;
+}
+
+.actor2-body {
+    margin: 0 auto;
+    padding: 5px 0;
+    width: 86%;
+}
+
+/* キャラクターセリフ2 ここまで↑ */
+
+/* 地の文 ここから↓ */
+
+.descriptive {
+  margin: 0 auto;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  width: 82%;
+}
+
+/* 地の文 ここまで↑ */
+
+/* チェックボックス ここから↓ */
+
+.check-clearfix:before,
+.check-clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.check-clearfix:after {
+  clear: both;
+}
+
+.check-container {
+  margin: 1rem auto 0;
+  position: relative;
+  width: 95%;
+}
+
+.checkcard {
+  background-color: #fff;
+  padding: 1.5rem;
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(75, 75, 75, .07);
+  z-index: 1;
+}
+
+.check-body {
+  display: inline-block;
+  float: left;
+  width: 95%;
+}
+
+.check-description {
+  display: inline-block;
+  font-weight: 300;
+  line-height: 22px;
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+.check-description li {
+  padding: 13px 0;
+  list-style: none;
+}
+
+.check-description li:nth-child(odd) span {
+  background: linear-gradient(transparent 80%, #ffff66 80%);
+  font-weight: 700;
+}
+
+.check-description li:nth-child(even) span {
+  background: linear-gradient(transparent 65%, #ffff66 65%);
+  font-weight: 700;
+}
+
+.card-shadow {
+  background-color: #fff;
+  box-shadow: 0 2px 25px 2px rgba(0, 0, 0, 1), 0 2px 50px 2px rgba(0, 0, 0, 1), 0 0 100px 3px rgba(0, 0, 0, .25);
+  height: 1px;
+  margin: -1px auto 0;
+  width: 98%;
+  z-index: -1;
+}
+
+/* チェックボックス ここまで↑ */
+
+/* CTAレイアウト ここから↓ */
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.u-clearfix:before,
+.u-clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.u-clearfix:after {
+  clear: both;
+}
+
+.card-container {
+  margin: 1rem auto 0;
+  position: relative;
+  width: 95%;
+}
+
+.card {
+  background-color: #fff;
+  padding: 1.5rem;
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(75, 75, 75, .07);
+  z-index: 1;
+}
+
+.card-body {
+  display: inline-block;
+  float: left;
+  width: 100%;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 60px;
+  margin: auto;
+	padding: 1em 0;
+  text-align: center;
+}
+
+.card-description {
+  display: inline-block;
+  font-weight: 300;
+  line-height: 22px;
+  margin: 10px 0;
+}
+
+.card-read {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 6px;
+  margin: 0.5rem 0.3rem 2rem;
+  position: relative;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.card-read:after {
+  background-color: #b8bddd;
+  content: "";
+  display: block;
+  height: 1px;
+  position: absolute;
+  top: 9px;
+  width: 75%;
+}
+
+.card-media {
+  float: right;
+	margin: auto;
+	width: 100%;
+	height: auto;
+}
+
+.card-shadow {
+  background-color: #fff;
+  box-shadow: 0 2px 25px 2px rgba(0, 0, 0, 1), 0 2px 50px 2px rgba(0, 0, 0, 1), 0 0 100px 3px rgba(0, 0, 0, .25);
+  height: 1px;
+  margin: -1px auto 0;
+  width: 98%;
+  z-index: -1;
+}
+
+/* CTAレイアウト ここまで↑ */
+
+
+
+
+
+
