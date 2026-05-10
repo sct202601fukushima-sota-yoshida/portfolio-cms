@@ -53,3 +53,22 @@ jobs:
           name: surefire-reports
           path: target/surefire-reports/
           if-no-files-found: ignore
+
+      - name: Upload JaCoCo coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-coverage-report
+          path: target/site/jacoco/
+          if-no-files-found: ignore
+
+      - name: Print coverage summary
+        if: always()
+        run: |
+          if [ -f target/site/jacoco/jacoco.csv ]; then
+            awk -F',' 'NR>1 { instr_missed+=$4; instr_covered+=$5 } \
+              END { printf "::notice::Instruction coverage: %d/%d = %.1f%%\n", \
+              instr_covered, instr_covered+instr_missed, \
+              100*instr_covered/(instr_covered+instr_missed) }' \
+              target/site/jacoco/jacoco.csv
+          fi

@@ -146,6 +146,39 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<!-- JaCoCo: テスト実行時にバイトコード計測を仕込み、カバレッジレポートを生成。
+				     mvn test の後に target/site/jacoco/index.html と jacoco.csv が出る。
+				     Lombok 生成コードと、テスト対象として意味の薄い層（Application エントリ、
+				     設定クラス、Entity / DTO）はカバレッジ計算から除外し、ロジック層に絞った
+				     有意な指標にしている。 -->
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.13</version>
+				<configuration>
+					<excludes>
+						<exclude>**/PortfolioCmsApplication.class</exclude>
+						<exclude>**/config/**</exclude>
+						<exclude>**/entity/**</exclude>
+						<exclude>**/dto/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
