@@ -55,8 +55,9 @@
     --color-muted-bg:      #f3efe7;
     --color-accent:        #2c3e5a;   /* 深紺 */
     --color-accent-hover:  #1f2d44;
-    --color-gold:          #b8985a;   /* φ accent */
+    --color-gold:          #b8985a;   /* φ accent (ダーク背景上で使用) */
     --color-gold-hover:    #9d7f44;
+    --color-gold-text:     #826a3a;   /* paper 背景上の小型テキスト用（WCAG AA 4.88:1） */
     --color-danger:        #b34c3a;
     --color-success-bg:    #d8e9d3;
     --color-success-fg:    #2f4a25;
@@ -276,7 +277,7 @@ h1, h2, h3, h4 {
 .category-divider__index {
     font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
     font-size: var(--fs-xs);
-    color: var(--color-gold);
+    color: var(--color-gold-text);   /* WCAG AA on paper */
     letter-spacing: 0.12em;
     flex-shrink: 0;
 }
@@ -637,7 +638,7 @@ h1, h2, h3, h4 {
 .site-footer__sig { font-size: var(--fs-xs); }
 .site-footer__phi {
     font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
-    color: var(--color-gold);
+    color: var(--color-gold-text);   /* WCAG AA on paper */
     margin: 0 var(--s-2);
 }
 

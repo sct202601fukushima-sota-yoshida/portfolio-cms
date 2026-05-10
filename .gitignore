@@ -38,3 +38,7 @@ uploads/*
 !uploads/portfolio-samples/
 *.log
 .DS_Store
+
+### Lighthouse generated reports (regenerated on demand) ###
+docs/lighthouse/*.html
+docs/lighthouse/*.json
