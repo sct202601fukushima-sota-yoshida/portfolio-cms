@@ -1,0 +1,31 @@
+# =============================================================
+# Render Blueprint
+# 「New +」→「Blueprint」からこのファイルを参照することで、
+# Web Service の構成（runtime, plan, region, env var）を一発設定できる。
+# =============================================================
+
+services:
+  - type: web
+    name: portfolio-cms
+    runtime: docker
+    plan: free
+    region: singapore   # 無料枠で東京に最も近い region
+    branch: main
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      # Supabase の Session Pooler 接続情報（管理画面で個別に入力）
+      - key: DB_URL
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      # 初期 admin アカウント（管理画面で個別に入力）
+      - key: INITIAL_ADMIN_USERNAME
+        sync: false
+      - key: INITIAL_ADMIN_PASSWORD
+        sync: false

@@ -34,7 +34,9 @@ spring:
       max-request-size: 10MB
 
 server:
-  port: 8080
+  # Render 等の PaaS では PORT 環境変数で待ち受けポートが指定される。
+  # 未指定時はローカル開発用に 8080 を使う。
+  port: ${PORT:8080}
   error:
     include-message: always
 

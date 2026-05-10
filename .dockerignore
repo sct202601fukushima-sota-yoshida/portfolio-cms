@@ -1,0 +1,27 @@
+# Build artifacts
+target/
+build/
+out/
+
+# IDE / OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Git
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# Docs (Docker イメージには不要)
+docs/
+HELP.md
+
+# Local dev only
+*.log
+.mvn/wrapper/maven-wrapper.jar
+
+# uploads/ は portfolio-samples のみを Dockerfile で COPY するため
+# ここでは除外しない（Dockerfile 側で必要部分だけ COPY する）
