@@ -17,6 +17,14 @@ spring:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/portfolio_cms}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+    # HikariCP: Render 無料枠 (1 instance) + Supabase Free (max 60 connections) 前提で控えめに。
+    # 公開LP は Caffeine キャッシュ (TTL 5m) で大半を吸収するため、ピーク時でも 3 で十分。
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 1
+      idle-timeout: 30000
+      max-lifetime: 1800000   # 30 min — pooler の接続 idle 切断より短く保つ
+      connection-timeout: 5000
 
   jpa:
     properties:
