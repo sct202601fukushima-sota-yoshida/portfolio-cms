@@ -47,18 +47,27 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
             )
             .headers(headers -> headers
-                // CSP
+                // CSP — XSS / clickjacking / 外部リソース読込を構造的に遮断
                 .contentSecurityPolicy(csp -> csp.policyDirectives(CSP))
                 // HSTS — Render の前段で HTTPS 終端されるため、includeSubDomains で onrender.com 全体を対象に
                 .httpStrictTransportSecurity(hsts -> hsts
                         .includeSubDomains(true)
                         .maxAgeInSeconds(31_536_000) // 1 year
                 )
-                // X-Content-Type-Options: nosniff と X-Frame-Options: DENY は Spring Security の既定で有効
-                // Referrer-Policy: strict-origin → 外部サイト遷移時に URL の path/query を漏らさない
+                // X-Frame-Options: DENY — 任意のサイトからの iframe 埋め込みを禁止 (clickjacking 対策)
+                // CSP の frame-ancestors と併せた二重防御
+                .frameOptions(frame -> frame.deny())
+                // X-Content-Type-Options: nosniff — Content-Type の MIME sniffing を抑制
+                .contentTypeOptions(opts -> {})
+                // Referrer-Policy — 外部サイト遷移時に URL の path/query/hash を漏らさない
                 .referrerPolicy(rp -> rp.policy(
                         org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
                                 .ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN
+                ))
+                // Permissions-Policy — 利用しない機能を明示的に拒否し、サードパーティ iframe からの濫用も防ぐ
+                .permissionsPolicyHeader(p -> p.policy(
+                        "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), " +
+                        "microphone=(), payment=(), usb=()"
                 ))
             )
             .formLogin(login -> login
