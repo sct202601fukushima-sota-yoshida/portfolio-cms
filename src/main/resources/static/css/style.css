@@ -145,6 +145,23 @@ h1, h2, h3, h4 {
     font-weight: 700;
     letter-spacing: -0.01em;
 }
+
+/* キーボード操作時のフォーカスリングを全要素で統一する。
+   :focus-visible はキーボード操作時のみ発火し、マウスクリックでは抑制される
+   ためマウスユーザの体験を損なわず、キーボードユーザにのみハイライトを提供。 */
+:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+/* フォーム入力は既存の box-shadow + border-color による強調を使うため、
+   outline はリセットして二重の枠が出ないようにする */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: none;
+}
 } /* end @layer base */
 
 /* =============================================================
