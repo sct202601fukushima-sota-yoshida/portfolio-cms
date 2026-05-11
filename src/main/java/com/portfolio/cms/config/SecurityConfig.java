@@ -8,6 +8,35 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+    /**
+     * Content Security Policy.
+     *
+     * <p>方針:
+     * <ul>
+     *   <li>原則: {@code 'self'} のみを許可し、外部リソース読込を遮断（CDN/Analytics 等を一切使っていない設計）</li>
+     *   <li>例外: {@code script-src} と {@code style-src} に {@code 'unsafe-inline'} を許可する。
+     *       理由: <code>&lt;script type="application/ld+json"&gt;</code> による構造化データと、
+     *       公開LP の小規模なインライン JS (TOC / lightbox / scroll-to-top) を許容するため。
+     *       Markdown 本文の HTML エスケープは {@link com.portfolio.cms.service.MarkdownService} 側で
+     *       既に閉じている（{@code escapeHtml(true)}）ので、ここを開けても XSS 経路は残らない</li>
+     *   <li>{@code frame-ancestors 'none'}: クリックジャッキング対策</li>
+     *   <li>{@code form-action 'self'}: フォーム送信先を同一オリジンに制限</li>
+     *   <li>{@code upgrade-insecure-requests}: HTTP 残存リソースを HTTPS へ自動昇格</li>
+     * </ul>
+     */
+    private static final String CSP =
+            "default-src 'self'; " +
+            "script-src 'self' 'unsafe-inline'; " +
+            "style-src 'self' 'unsafe-inline'; " +
+            "img-src 'self' data: blob:; " +
+            "font-src 'self'; " +
+            "connect-src 'self'; " +
+            "frame-ancestors 'none'; " +
+            "base-uri 'self'; " +
+            "form-action 'self'; " +
+            "object-src 'none'; " +
+            "upgrade-insecure-requests";
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -16,6 +45,21 @@ public class SecurityConfig {
                                  "/actuator/health", "/actuator/info").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
+            )
+            .headers(headers -> headers
+                // CSP
+                .contentSecurityPolicy(csp -> csp.policyDirectives(CSP))
+                // HSTS — Render の前段で HTTPS 終端されるため、includeSubDomains で onrender.com 全体を対象に
+                .httpStrictTransportSecurity(hsts -> hsts
+                        .includeSubDomains(true)
+                        .maxAgeInSeconds(31_536_000) // 1 year
+                )
+                // X-Content-Type-Options: nosniff と X-Frame-Options: DENY は Spring Security の既定で有効
+                // Referrer-Policy: strict-origin → 外部サイト遷移時に URL の path/query を漏らさない
+                .referrerPolicy(rp -> rp.policy(
+                        org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
+                                .ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN
+                ))
             )
             .formLogin(login -> login
                 .loginPage("/admin/login")
