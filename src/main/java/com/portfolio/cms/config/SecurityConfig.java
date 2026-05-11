@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 @Configuration
 public class SecurityConfig {
@@ -65,7 +66,10 @@ public class SecurityConfig {
                                 .ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN
                 ))
                 // Permissions-Policy — 利用しない機能を明示的に拒否し、サードパーティ iframe からの濫用も防ぐ
-                .permissionsPolicyHeader(p -> p.policy(
+                // ※ Spring Security 6.5 の permissionsPolicyHeader DSL がヘッダ送出を行わない既知挙動を
+                //   回避するため StaticHeadersWriter で直接書き出している。
+                .addHeaderWriter(new StaticHeadersWriter(
+                        "Permissions-Policy",
                         "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), " +
                         "microphone=(), payment=(), usb=()"
                 ))
