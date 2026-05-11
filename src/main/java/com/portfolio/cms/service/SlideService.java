@@ -6,6 +6,8 @@ import com.portfolio.cms.entity.Slide;
 import com.portfolio.cms.entity.SlideImage;
 import com.portfolio.cms.repository.SlideRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +28,13 @@ public class SlideService {
         return slideRepository.findAllNotDeleted();
     }
 
+    /**
+     * 公開LP で参照される is_active = true のスライド一覧。
+     * 内容は admin が CRUD した時のみ変わるため、Caffeine で 5 分キャッシュする
+     * （TTL は application.yml で定義）。CRUD 操作側で {@link CacheEvict} を呼ぶ
+     * ので、書込み直後の閲覧でも古いキャッシュは出ない。
+     */
+    @Cacheable("publicSlides")
     public List<Slide> findAllActive() {
         return slideRepository.findAllActive();
     }
@@ -36,6 +45,7 @@ public class SlideService {
     }
 
     @Transactional
+    @CacheEvict(value = "publicSlides", allEntries = true)
     public Slide create(SlideForm form) {
         Category category = categoryService.findById(form.getCategoryId());
         Slide slide = Slide.builder()
@@ -51,6 +61,7 @@ public class SlideService {
     }
 
     @Transactional
+    @CacheEvict(value = "publicSlides", allEntries = true)
     public Slide update(Long id, SlideForm form) {
         Slide slide = findByIdForAdmin(id);
         slide.setCategory(categoryService.findById(form.getCategoryId()));
@@ -64,6 +75,7 @@ public class SlideService {
     }
 
     @Transactional
+    @CacheEvict(value = "publicSlides", allEntries = true)
     public void softDelete(Long id) {
         Slide slide = findByIdForAdmin(id);
         slide.setDeletedAt(LocalDateTime.now());

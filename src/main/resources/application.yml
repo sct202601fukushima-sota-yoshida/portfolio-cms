@@ -33,6 +33,15 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
+  # 公開LP のスライド一覧をキャッシュし DB 往復を削減。
+  # 書込み (create / update / softDelete) では @CacheEvict で全エントリ無効化するため、
+  # 管理画面で編集すれば即座に反映される。
+  cache:
+    type: caffeine
+    cache-names: publicSlides
+    caffeine:
+      spec: maximumSize=16,expireAfterWrite=5m
+
 server:
   # Render 等の PaaS では PORT 環境変数で待ち受けポートが指定される。
   # 未指定時はローカル開発用に 8080 を使う。
