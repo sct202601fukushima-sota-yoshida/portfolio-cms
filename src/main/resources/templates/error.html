@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('エラーが発生しました')}"></head>
+<body>
+
+<header th:replace="~{layout/fragments :: header}"></header>
+
+<main class="site-main">
+    <section class="hero error-hero">
+        <div class="container">
+            <p class="error-hero__code"
+               th:text="${status} ?: '?'">?</p>
+            <h1>エラーが<em class="accent">.</em><br>発生しました</h1>
+            <p class="lead"
+               th:text="${error} ?: 'ご不便をおかけして申し訳ございません。'">エラーが発生しました</p>
+            <p class="hero__meta">
+                <a th:href="@{/}" class="error-hero__back">← トップへ戻る</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{layout/fragments :: footer}"></footer>
+
+</body>
+</html>

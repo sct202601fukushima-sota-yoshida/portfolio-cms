@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('500 - サーバーエラー')}"></head>
+<body>
+
+<header th:replace="~{layout/fragments :: header}"></header>
+
+<main class="site-main">
+    <section class="hero error-hero">
+        <div class="container">
+            <p class="error-hero__code">500</p>
+            <h1>サーバー側で<em class="accent">.</em><br>問題が発生しました</h1>
+            <p class="lead">ご迷惑をおかけして申し訳ございません。<br>
+                時間を空けて再度お試しいただくか、トップへお戻りください。</p>
+            <p class="hero__meta">
+                <a th:href="@{/}" class="error-hero__back">← トップへ戻る</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{layout/fragments :: footer}"></footer>
+
+</body>
+</html>

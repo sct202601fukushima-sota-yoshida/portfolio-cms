@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('404 - ページが見つかりません')}"></head>
+<body>
+
+<header th:replace="~{layout/fragments :: header}"></header>
+
+<main class="site-main">
+    <section class="hero error-hero">
+        <div class="container">
+            <p class="error-hero__code">404</p>
+            <h1>ページが<em class="accent">.</em><br>見つかりませんでした</h1>
+            <p class="lead">お探しのページは移動・削除されたか、URL が間違っている可能性があります。</p>
+            <p class="hero__meta">
+                <a th:href="@{/}" class="error-hero__back">← トップへ戻る</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{layout/fragments :: footer}"></footer>
+
+</body>
+</html>

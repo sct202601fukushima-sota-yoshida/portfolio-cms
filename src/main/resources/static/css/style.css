@@ -326,6 +326,29 @@ select:focus-visible {
     from { transform: translateY(12px); }
 }
 
+/* ---- Error hero (404 / 500 / fallback) ----
+   通常のヒーローと同じ ink 背景を使いつつ、ステータスコードを大型表示し、
+   φ blueprint は出さずシンプルに収める */
+.error-hero { text-align: left; }
+.error-hero__code {
+    font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 1;
+    font-weight: 700;
+    color: var(--color-gold);
+    margin-bottom: var(--s-3);
+    letter-spacing: -0.03em;
+}
+.error-hero__back {
+    color: var(--color-gold);
+    border-bottom: 1px solid var(--color-gold);
+    padding-bottom: 2px;
+}
+.error-hero__back:hover {
+    color: var(--color-paper);
+    border-bottom-color: var(--color-paper);
+}
+
 /* ---- Category divider ---- */
 /* 2026 trend: Frosted Touch — subtle frosted-glass plate behind the marker */
 .category-divider {
