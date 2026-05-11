@@ -309,6 +309,12 @@ portfolio-cms/
 
 ---
 
+## 変更履歴
+
+日付ベースの主な変更履歴は [CHANGELOG.md](CHANGELOG.md) を参照。
+
+---
+
 ## アーキテクチャ判断の記録 (ADR)
 
 主要な設計判断は `docs/adr/` に Architecture Decision Records として残している。「いつ・なぜ・何を選んだか」がコードの履歴とは別に追える。
