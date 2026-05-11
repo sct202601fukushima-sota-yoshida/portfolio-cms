@@ -110,4 +110,61 @@ class AdminSlideControllerTest {
 
         verify(slideService).softDelete(eq(42L));
     }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void editForm_rendersFormPrefilledWithExistingSlide() throws Exception {
+        Category cat = Category.builder().id(1L).name("自己紹介").sortOrder(0).build();
+        Slide existing = Slide.builder()
+                .id(42L)
+                .category(cat)
+                .title("既存スライド")
+                .description("既存本文")
+                .sortOrder(3)
+                .isActive(true)
+                .build();
+        given(slideService.findByIdForAdmin(42L)).willReturn(existing);
+        given(categoryService.findAllSorted()).willReturn(List.of(cat));
+
+        mockMvc.perform(get("/admin/slides/42/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("admin/slides/form"))
+                .andExpect(model().attribute("mode", "edit"))
+                .andExpect(model().attributeExists("slideForm", "slide", "categories"));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void update_rerendersForm_whenValidationFails() throws Exception {
+        Category cat = Category.builder().id(1L).name("自己紹介").sortOrder(0).build();
+        Slide existing = Slide.builder().id(42L).category(cat).title("title").build();
+        given(slideService.findByIdForAdmin(42L)).willReturn(existing);
+        given(categoryService.findAllSorted()).willReturn(List.of(cat));
+
+        mockMvc.perform(post("/admin/slides/42")
+                        .with(csrf())
+                        .param("title", "")          // title is required → validation error
+                        .param("sortOrder", "0"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("admin/slides/form"))
+                .andExpect(model().attribute("mode", "edit"))
+                .andExpect(model().attributeHasFieldErrors("slideForm", "title"));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void update_redirectsToList_onSuccess() throws Exception {
+        mockMvc.perform(post("/admin/slides/42")
+                        .with(csrf())
+                        .param("categoryId", "1")
+                        .param("title", "更新後のタイトル")
+                        .param("description", "更新後の本文")
+                        .param("sortOrder", "2")
+                        .param("isActive", "true"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/admin/slides"))
+                .andExpect(flash().attributeExists("message"));
+
+        verify(slideService).update(eq(42L), any());
+    }
 }
