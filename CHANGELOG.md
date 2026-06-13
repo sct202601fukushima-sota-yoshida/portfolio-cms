@@ -14,6 +14,25 @@
 
 ---
 
+## [2026-06-13] — 実 SaaS 作品の掲載とコンテンツ改訂
+
+「自作 CMS（バックエンド設計の実証）」に加えて、**AI と協働して開発・本番公開した実 SaaS 2 本**を作品として統合し、就職活動向けにコンテンツを整えた日。
+
+### Added
+- **実 SaaS 2 本をポートフォリオに追加（V8）** — VoxReply（AI レビュー返信）/ Patchlog（AI changelog 生成）を、Claude Code と協働で開発・公開した作品として掲載。「慣れないスタックでも動いて公開できる」実証 ([ebf9c96](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/commit/ebf9c96))
+- **SaaS 作品スクリーンショット（V10）** — 最適化済み jpg + webp を各 SaaS スライドに添付 ([636c8c1](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/commit/636c8c1))
+- **事業ストーリー + AI 運用設計の 2 スライド（V11）** — 「軽い興味から事業設計まで一気に」「AI で運用まで回す設計」をポートフォリオ末尾に追加 ([ea806a6](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/commit/ea806a6))
+
+### Changed
+- **LP 内 Markdown リンクを別タブで開く** — `target=_blank` を付与し、外部デモ等への遷移で LP を離脱させない ([f529984](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/commit/f529984))
+- **SaaS デモ URL をクリック可能化（V9）** — 生 URL を Markdown リンクに修正 ([d5a392b](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/commit/d5a392b))
+- **就活配慮の表現調整（V12）** — LP から「祖母の介護」「フルリモート必須」の明記を外し、リモートは「一人完結できた強み」として提示。訓練校の指摘に対応 ([e6f041c](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/commit/e6f041c))
+
+### Fixed
+- **Farbe チラシの事実訂正（V13）** — 「Photoshop で版下作成」を実態に合わせ「デザイン科最初期に Word で作った最初の制作物」に訂正 ([fff83c1](https://github.com/sct202601fukushima-sota-yoshida/portfolio-cms/commit/fff83c1))
+
+---
+
 ## [2026-05-11] — UX polish & operational maturity
 
 採用担当・エンジニア審査者の双方に対する完成度を引き上げた日。
