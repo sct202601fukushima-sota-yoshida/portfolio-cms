@@ -46,12 +46,15 @@ class MarkdownServiceTest {
     }
 
     @Test
-    @DisplayName("リンク: [label](url) → <a href=\"url\">label</a>")
+    @DisplayName("リンク: [label](url) → 別タブで開く <a href target=_blank rel=noopener>")
     void link_isRenderedAsAnchorTag() {
         String html = markdown.toHtml("[GitHub](https://github.com/)");
 
         assertThat(html)
-                .contains("<a href=\"https://github.com/\">GitHub</a>");
+                .contains("href=\"https://github.com/\"")
+                .contains("target=\"_blank\"")
+                .contains("rel=\"noopener noreferrer\"")
+                .contains(">GitHub</a>");
     }
 
     @Test

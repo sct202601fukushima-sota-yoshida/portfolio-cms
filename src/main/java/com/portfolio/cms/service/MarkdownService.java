@@ -1,8 +1,15 @@
 package com.portfolio.cms.service;
 
+import org.commonmark.node.Link;
+import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.AttributeProvider;
+import org.commonmark.renderer.html.AttributeProviderContext;
+import org.commonmark.renderer.html.AttributeProviderFactory;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * Renders Markdown to HTML for slide descriptions.
@@ -26,6 +33,7 @@ public class MarkdownService {
         this.renderer = HtmlRenderer.builder()
                 .escapeHtml(true)
                 .softbreak("<br />\n")
+                .attributeProviderFactory(new LinkAttributeProviderFactory())
                 .build();
     }
 
@@ -53,5 +61,27 @@ public class MarkdownService {
         }
         String html = renderer.render(parser.parse(markdown));
         return RESIDUAL_BOLD.matcher(html).replaceAll("<strong>$1</strong>");
+    }
+
+    /**
+     * 生成されるリンク（&lt;a&gt;）に {@code target="_blank"} と
+     * {@code rel="noopener noreferrer"} を付与し、別タブで開くようにする。
+     * 外部のデモや GitHub などを開いてもポートフォリオ本体が閉じないための配慮。
+     */
+    private static final class LinkAttributeProviderFactory implements AttributeProviderFactory {
+        @Override
+        public AttributeProvider create(AttributeProviderContext context) {
+            return new LinkAttributeProvider();
+        }
+    }
+
+    private static final class LinkAttributeProvider implements AttributeProvider {
+        @Override
+        public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
+            if (node instanceof Link) {
+                attributes.put("target", "_blank");
+                attributes.put("rel", "noopener noreferrer");
+            }
+        }
     }
 }
