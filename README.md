@@ -347,17 +347,17 @@ portfolio-cms/
 
 ---
 
-## デプロイ前チェックリスト
+## デプロイ前チェックリスト（フォーク／再デプロイ時）
 
-公開前に差し替えが必要な箇所:
+本リポジトリをフォークして自分の環境にデプロイする場合に差し替える箇所:
 
 | 場所 | 内容 |
 |:---|:---|
-| `src/main/resources/templates/layout/fragments.html` | フッタ `Contact` の `https://github.com/` と `mailto:contact@example.com` を実 URL に |
+| `src/main/resources/templates/layout/fragments.html` | フッタ `Contact` の GitHub / メールアドレス（現在は作者の実値）を自分のものに差し替え |
 | 環境変数 `INITIAL_ADMIN_USERNAME` / `INITIAL_ADMIN_PASSWORD` | 強いパスワードを設定（未設定時は警告ログ + デフォルト `admin` / `admin123`） |
 | 環境変数 `DB_URL` / `DB_USER` / `DB_PASSWORD` | 本番 PostgreSQL の接続情報 |
 | 起動引数 | `SPRING_PROFILES_ACTIVE=prod` で本番プロファイル有効化 |
-| 「最後に」スライド | 管理画面から GitHub リンクを差し込む（Markdown 記法対応済み） |
+| 「最後に」スライド | GitHub リンクは V5 シードで投入済み。フォーク時は自分のリポジトリ URL に差し替え |
 
 ---
 
