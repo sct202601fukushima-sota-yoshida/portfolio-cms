@@ -23,15 +23,26 @@ on:
 jobs:
   ping:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 6
     steps:
       - name: Ping live site
         run: |
           set -e
           URL="https://portfolio-cms-cjr4.onrender.com/"
           echo "Pinging $URL"
-          # -L: redirects, --max-time 30: cold-start も許容
-          status=$(curl -s -o /dev/null -L --max-time 30 -w "%{http_code}" "$URL")
+          # Render 無料枠のコールドスタートは数十秒かかるため、せっかちに失敗しない設定にする:
+          #   --max-time 90        : 1 回あたり最大 90 秒待つ（コールドスタート起床を許容）
+          #   --retry 3            : スリープ復帰中の 5xx / 接続エラーを最大 3 回リトライ
+          #   --retry-delay 15     : リトライ間隔 15 秒（起動を待つ）
+          #   --retry-all-errors   : タイムアウト含むあらゆるエラーでリトライ
+          #   --retry-connrefused  : 接続拒否（起動直後）でもリトライ
+          #   --retry-max-time 300 : リトライ総時間の上限（job timeout 内に収める）
+          status=$(curl -s -o /dev/null -L \
+            --max-time 90 \
+            --retry 3 --retry-delay 15 --retry-all-errors --retry-connrefused \
+            --retry-max-time 300 \
+            -w "%{http_code}" "$URL")
           echo "HTTP $status"
-          # 200 か 301/302 のみ成功扱い
+          # 200 か 301/302 のみ成功扱い。ここまでリトライしても落ちる場合は
+          # 「本当にサイトが落ちている」可能性が高く、失敗通知として有用。
           [[ "$status" =~ ^(200|301|302)$ ]]
